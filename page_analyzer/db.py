@@ -43,3 +43,17 @@ def get_url_by_id(conn, id):
             """, (id,))
         return cursor.fetchone()
 
+
+def get_url_by_name(conn, name):
+    with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
+        cursor.execute("""
+                SELECT
+                    id,
+                    name,
+                    created_at
+                FROM    
+                    urls
+                WHERE
+                    name = %s;
+                """, (name, ))
+        return cursor.fetchone()

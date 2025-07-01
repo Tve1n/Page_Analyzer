@@ -1,14 +1,13 @@
 import os
 from contextlib import contextmanager
+from urllib.parse import urlparse
 
 import psycopg2
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, url_for  # flash,
+from flask import Flask, flash, redirect, render_template, request, url_for
 
-# from urllib.parse import urlparse
 from page_analyzer import db
-
-# from page_analyzer.validator import validate
+from page_analyzer.validator import validate
 
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
@@ -41,36 +40,42 @@ def index():
 
 
 @app.get('/urls')
-def urls():
+def urls_list():
     with connect(DATABASE_URL) as conn:
         urls_list = db.get_all_urls(conn)
     return render_template(
-            'url_id.html',
-            url=urls_list
+            'urls.html',
+            urls=urls_list
         )
 
 
 @app.post('/urls')  # Добавление нового url и перенаправления на него
 def url_add():
     url_name = request.form.get('url')
+    errors = validate(url_name)
+    if errors:
+        for error in errors:
+            flash(error, 'error')
+        render_template(
+            'index.html'
+        ), 422
+    url_parsed = urlparse(url_name)
+    url_name = f'{url_parsed.scheme}://{url_parsed.netloc}'
     with connect(DATABASE_URL) as conn:
+        url_to_check = db.get_url_by_name(conn, url_name)
+        if url_to_check:
+            flash("Страница уже существует", 'warning')
+            return redirect(url_for('url_info', id=url_to_check[0]))
         url_id = db.create_url(conn, url_name)
-        return redirect(url_for('url_info', id=url_id)) 
+    flash('Страница успешно добавлена', 'success')
+    return redirect(url_for('url_info', id=url_id)) 
 
 
 @app.get('/urls/<int:id>')  # Получение определённого id из базы
 def url_info(id):
     with connect(DATABASE_URL) as conn:
         url = db.get_url_by_id(conn, id)
-        return render_template(
-            'url_id.html',
-            url=url
-        )
-
-
-'''
-@app.get('/urls')
-def urls_list():
-    with conn.cursor() as curs:
-        urls = db.get_all_urls(curs)
-'''
+    return render_template(
+        'url_id.html',
+        url=url
+    )
