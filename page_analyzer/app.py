@@ -75,7 +75,19 @@ def url_add():
 def url_info(id):
     with connect(DATABASE_URL) as conn:
         url = db.get_url_by_id(conn, id)
+        url_checks = db.get_checks_by_url_id(conn, id)
     return render_template(
         'url_id.html',
-        url=url
+        url=url,
+        checks=url_checks
     )
+
+
+@app.post('/urls/<int:id>/checks')
+def url_check(id):
+    with connect(DATABASE_URL) as conn:
+        # url = db.get_url_by_id(conn, id)
+        db.create_check(conn, id)
+    
+    flash('Страница успешно проверена', 'success')
+    return redirect(url_for('url_info', id=id))

@@ -18,6 +18,16 @@
     </nav>
   </header>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if massages %}
+        {% for category, massage in massages %}
+          <div class="alert {{ category }}" role="alert">
+            {{ massage }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
   {% block content %}
   {% endblock %}
 

@@ -57,3 +57,32 @@ def get_url_by_name(conn, name):
                     name = %s;
                 """, (name, ))
         return cursor.fetchone()
+
+
+def create_check(conn, url_id):
+    with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
+        creation_date = date.today()
+        cursor.execute("""  
+                INSERT INTO url_checks(
+                    url_id, created_at
+                )
+                VALUES
+                    (%s, %s);
+        """, (url_id, creation_date))
+
+
+def get_checks_by_url_id(conn, id):
+    with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
+        cursor.execute("""  
+            SELECT
+                id,
+                url_id,
+                created_at
+            FROM
+                url_checks
+            WHERE
+                url_id = (%s)
+            ORDER BY
+                id DESC;
+        """, (id, ))
+        return cursor.fetchall()
