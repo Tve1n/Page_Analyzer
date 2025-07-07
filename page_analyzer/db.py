@@ -3,7 +3,7 @@ from datetime import date
 from psycopg2 import extras
 
 
-def get_all_urls(conn):
+def get_all_urls(conn):  # Вроде ненужная функция
     with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
         cursor.execute("""
             SELECT
@@ -59,16 +59,18 @@ def get_url_by_name(conn, name):
         return cursor.fetchone()
 
 
-def create_check(conn, url_id):
+def create_check(conn, url_id, status_code):
     with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
         creation_date = date.today()
         cursor.execute("""  
                 INSERT INTO url_checks(
-                    url_id, created_at
+                    url_id,
+                    status_code,
+                    created_at
                 )
                 VALUES
-                    (%s, %s);
-        """, (url_id, creation_date))
+                    (%s, %s, %s);
+        """, (url_id, status_code, creation_date))
 
 
 def get_checks_by_url_id(conn, id):
@@ -77,6 +79,7 @@ def get_checks_by_url_id(conn, id):
             SELECT
                 id,
                 url_id,
+                status_code,
                 created_at
             FROM
                 url_checks
@@ -85,4 +88,21 @@ def get_checks_by_url_id(conn, id):
             ORDER BY
                 id DESC;
         """, (id, ))
+        return cursor.fetchall()
+
+
+def get_all_last_check(conn):
+    with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
+        cursor.execute("""  
+            SELECT
+                urls.id,
+                name,
+                MAX(url_checks.created_at) as last_check,
+                MAX(url_checks.status_code) as last_status_code
+            FROM urls
+            LEFT JOIN url_checks
+                ON url_checks.url_id = urls.id
+            GROUP BY urls.id
+            ORDER BY urls.id DESC;
+            """)
         return cursor.fetchall()

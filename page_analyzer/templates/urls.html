@@ -20,8 +20,8 @@
                 <td>
                     <a href="{{url_for('url_info', id=url.id)}}">{{ url.name }}</a>
                 </td>
-                <td>!проверка!</td>
-                <td>!Код ответа!</td>
+                <td>{{ url.last_check | default('', true) }}</td>
+                <td>{{ url.last_status_code | default('', true) }}</td>
             </tr>
             {% endfor %}
           </tbody>      

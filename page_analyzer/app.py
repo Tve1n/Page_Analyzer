@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from urllib.parse import urlparse
 
 import psycopg2
+import requests
 from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request, url_for
 
@@ -42,10 +43,11 @@ def index():
 @app.get('/urls')
 def urls_list():
     with connect(DATABASE_URL) as conn:
-        urls_list = db.get_all_urls(conn)
+        # urls_list = db.get_all_urls(conn)
+        urls_checks = db.get_all_last_check(conn)
     return render_template(
             'urls.html',
-            urls=urls_list
+            urls=urls_checks
         )
 
 
@@ -55,7 +57,7 @@ def url_add():
     errors = validate(url_name)
     if errors:
         for error in errors:
-            flash(error, 'error')
+            flash(error, 'danger')
         render_template(
             'index.html'
         ), 422
@@ -64,7 +66,7 @@ def url_add():
     with connect(DATABASE_URL) as conn:
         url_to_check = db.get_url_by_name(conn, url_name)
         if url_to_check:
-            flash("Страница уже существует", 'warning')
+            flash('Страница уже существует', 'warning')
             return redirect(url_for('url_info', id=url_to_check[0]))
         url_id = db.create_url(conn, url_name)
     flash('Страница успешно добавлена', 'success')
@@ -86,8 +88,15 @@ def url_info(id):
 @app.post('/urls/<int:id>/checks')
 def url_check(id):
     with connect(DATABASE_URL) as conn:
-        # url = db.get_url_by_id(conn, id)
-        db.create_check(conn, id)
+        url = db.get_url_by_id(conn, id)
+        try:
+            request = requests.get(url.name)
+            request.raise_for_status()
+        except requests.RequestException:
+            flash('Произошла ошибка при проверке', 'danger')
+            return redirect(url_for('url_info', id=id))
+        status_code = request.status_code
+        db.create_check(conn, id, status_code)
     
     flash('Страница успешно проверена', 'success')
     return redirect(url_for('url_info', id=id))
