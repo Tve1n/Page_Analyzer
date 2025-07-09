@@ -59,18 +59,21 @@ def get_url_by_name(conn, name):
         return cursor.fetchone()
 
 
-def create_check(conn, url_id, status_code):
+def create_check(conn, url_id, status_code, h1, title, description):
     with conn.cursor(cursor_factory=extras.NamedTupleCursor) as cursor:
         creation_date = date.today()
         cursor.execute("""  
                 INSERT INTO url_checks(
                     url_id,
                     status_code,
+                    h1,
+                    title,
+                    description,
                     created_at
                 )
                 VALUES
-                    (%s, %s, %s);
-        """, (url_id, status_code, creation_date))
+                    (%s, %s, %s, %s, %s, %s);
+        """, (url_id, status_code, h1, title, description, creation_date))
 
 
 def get_checks_by_url_id(conn, id):
@@ -80,6 +83,9 @@ def get_checks_by_url_id(conn, id):
                 id,
                 url_id,
                 status_code,
+                h1,
+                title,
+                description,
                 created_at
             FROM
                 url_checks

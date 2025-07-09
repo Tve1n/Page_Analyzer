@@ -44,9 +44,9 @@
         <tr></tr>
           <td>{{ check.id }}</td>
           <td>{{ check.status_code | default('', true) }}</td>
-          <td>Пусто</td>
-          <td>Пусто</td>
-          <td>Пусто</td>
+          <td>{{ check.h1 | default('', true) }}</td>
+          <td>{{ check.title }}</td>
+          <td>{{ check.description | default('', true) }}</td>
           <td>{{ check.created_at }}</td>
           <td>{{ check.url_id }}</td>
         </tr>
