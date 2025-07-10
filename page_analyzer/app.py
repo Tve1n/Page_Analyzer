@@ -33,6 +33,16 @@ def connect(bd_url):
             connection.close()
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
+
+
 @app.get('/')
 def index():
     return render_template(
@@ -58,7 +68,7 @@ def url_add():
     if errors:
         for error in errors:
             flash(error, 'danger')
-        render_template(
+        return render_template(
             'index.html'
         ), 422
     url_parsed = urlparse(url_name)

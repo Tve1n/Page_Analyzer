@@ -4,7 +4,7 @@ install:  # сборка проекта
 dev: 
 	uv run flask --debug --app page_analyzer:app run
 
-check:  # тесты
+lint:  # тесты
 	uv run ruff check .
 
 PORT ?= 8000

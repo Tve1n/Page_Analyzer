@@ -9,3 +9,4 @@ def validate(check_url):
         errors.append("URL некорректный")
     if len(check_url) > 255:
         errors.append("URL превышает 255 символов")
+    return errors
