@@ -38,4 +38,4 @@ You can view the application in action at this link:
 ## Контакты
 - Автор: Тимофей Румак
 - [GitHub](https://github.com/Tve1n)
-- [Email](timarumak@gmail.com)
+- [Email]  timarumak@gmail.com

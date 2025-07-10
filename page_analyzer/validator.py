@@ -6,7 +6,7 @@ def validate(check_url):
     if not check_url:
         errors.append("URL не должен быть пустым")
     if not validators.url(check_url):
-        errors.append("URL некорректный")
+        errors.append("Некорректный URL")
     if len(check_url) > 255:
         errors.append("URL превышает 255 символов")
     return errors
