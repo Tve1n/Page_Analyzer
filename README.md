@@ -28,7 +28,7 @@ It is a Flask web application that allows users to analyze web pages for SEO eff
 - PostgreSQL
 - HTML/CSS
 - Bootstrap for frontend
-- Poetry for dependency management
+- uv Python packaging
 
 ## Demo version
 You can view the application in action at this link:

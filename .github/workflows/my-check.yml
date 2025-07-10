@@ -26,5 +26,5 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH 
       - name: Run linter
         run: |
-            make check
+            make lint
 
