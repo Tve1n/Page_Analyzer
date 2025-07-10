@@ -1,5 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Tve1n/python-project-83/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Tve1n/python-project-83/actions)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Tve1n_python-project-83&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Tve1n_python-project-83)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Tve1n_python-project-83&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Tve1n_python-project-83)
 
 # Page analyzer
 
