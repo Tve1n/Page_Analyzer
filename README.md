@@ -38,6 +38,7 @@ You can view the application in action at this link:
 
 
 ## Контакты
-- Автор: Тимофей Румак
-- [GitHub](https://github.com/Tve1n)
+- Creator: Timofey Rumak
 - Email -  timarumak@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/timofey-rumak-b8839a246/)
+- [Telegram - @Tve1n](https://t.me/Tve1n)
