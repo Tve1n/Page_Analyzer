@@ -33,11 +33,14 @@ It is a Flask web application that allows users to analyze web pages for SEO eff
 - uv Python packaging
 
 ## Demo version
+
 You can view the application in action at this link:
 [Page Analyzer Demo](https://python-project-83-k83z.onrender.com/)
 
 
-## Контакты
-- Автор: Тимофей Румак
-- [GitHub](https://github.com/Tve1n)
+## Contacts
+
+- Creator: Timofey Rumak
 - Email -  timarumak@gmail.com
+- [LinkedIn](https://www.linkedin.com/in/timofey-rumak-b8839a246/)
+- [Telegram - @Tve1n](https://t.me/Tve1n)
