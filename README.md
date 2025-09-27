@@ -20,7 +20,7 @@ It is a Flask web application that allows users to analyze web pages for SEO eff
 3. On the url page click "Запустить проверку" button to start check
 4. See the result below
 5. Navigate to the "Сайты" page to see a list of all analyzed URLs
-6. Click on a URL to view its detailed analysis history
+6. Click on a URL to view its detailed analysis history.
 
 
 ## Technologies
