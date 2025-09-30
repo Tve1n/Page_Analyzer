@@ -35,7 +35,7 @@ It is a Flask web application that allows users to analyze web pages for SEO eff
 ## Demo version
 
 You can view the application in action at this link:
-[Page Analyzer Demo](https://python-project-83-k83z.onrender.com/)
+[Page Analyzer Demo](https://page-analyzer-bw4r.onrender.com)
 
 
 ## Contacts
